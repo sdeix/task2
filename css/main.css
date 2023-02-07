@@ -14,7 +14,7 @@ align-content: center;
 .column{
     align-content: start;
     width:25%;
-    height: 100px;
+    height: 1000px;
     color:black;
     background: gray;
 
@@ -28,3 +28,13 @@ li{
 ul{
 padding-inline-start: 0
 }
+
+
+.done{
+    text-decoration: line-through;
+}
+
+
+
+
+
