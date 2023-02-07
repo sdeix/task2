@@ -116,3 +116,9 @@ li{
 ul{
 padding-inline-start: 0
 }
+.active{
+    color:green;
+}
+.taskcomplete{
+    text-decoration: line-through;
+}
