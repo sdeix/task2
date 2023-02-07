@@ -7,7 +7,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script defer src="js/vue.js"></script>
-<!--    <script defer src="js/main.js"></script>-->
+    <script defer src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <title>Notes App</title>
 </head>
@@ -15,10 +15,9 @@
 
 <div id="app">
     <ul id="columns">
-        <li class="column">1</li>
-        <li class="column"><2/li>
-        <li class="column">3</li>
-        <li class="column">4</li>
+        <li class="column"><card :count="3"></card><card :count="5"></card></li>
+        <li class="column"><card :count="3"></li>
+        <li class="column"><card :count="3"></li>
 
 
     </ul>
