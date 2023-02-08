@@ -60,11 +60,14 @@ methods:{
             this.column1=[],
             this.column2=[],
             this.column3=[],
-            this.dat=[]
+            this.dat=[],
+            this.blockOne= false
 
       },
       createCard(){
-            if(this.column1.length!=3){
+            let points = document.querySelectorAll('.pointInput')
+            console.log(points.length)
+            if(this.column1.length!=3 && points.length>2){
                   
                   this.options.splice(0,this.options.length)
                   this.points.splice(0,this.points.length)
@@ -103,6 +106,7 @@ mounted(){
               this.column2 = this.allColumns[1]
               this.column3 = this.allColumns[2]
               this.dat = this.allColumns[3]
+              this.blockOne = this.allColumns[4]
             } catch(e) {
               localStorage.removeItem('allColumns');
             }
@@ -157,7 +161,7 @@ mounted(){
 
 watch:{
       column1(){
-            this.allColumns = [this.column1,this.column2,this.column3, this.dat]
+            this.allColumns = [this.column1,this.column2,this.column3, this.dat, this.blockOne]
             
 
 
@@ -169,7 +173,7 @@ watch:{
 
       },
       column2(){
-            allColumns = [this.column1, this.column2, this.column3, this.dat]
+            allColumns = [this.column1, this.column2, this.column3, this.dat, this.blockOne]
 
             
             const parsed = JSON.stringify(this.allColumns);
@@ -177,7 +181,7 @@ watch:{
 
       },
       column3(){
-            allColumns = [this.column1, this.column2, this.column3, this.dat]
+            allColumns = [this.column1, this.column2, this.column3, this.dat, this.blockOne]
 
             
             const parsed = JSON.stringify(this.allColumns);
