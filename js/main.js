@@ -21,7 +21,7 @@ template:`
       <input type="submit" @click.prevent="createCard" value="Создать карточку">
       </form>
        
-      <card v-for="card in column1" :pointsAndTitle="card" :block="blockOne">  </card>
+      <card v-for="card in column1" :pointsAndTitle="card" >  </card>
       
       
       
@@ -45,12 +45,11 @@ data(){
             column1:[],
             column2:[],
             column3:[],
-            blockOne:false,
       }
   },
 methods:{
       createCard(){
-
+            if(this.column1.length!=3){
                   console.log(this.column1.length)
                   
                   this.options.splice(0,this.options.length)
@@ -65,7 +64,7 @@ methods:{
       
                   this.column1.push({title: this.cardTitle ? this.cardTitle : 'Без названия', points: copy})
 
-
+            }
 
 
       },
@@ -79,10 +78,50 @@ methods:{
             
       }
 },
+mounted(){
+      eventBus.$on('checkCard', cardsCheck => {
+            console.log("Qwe")
+            if(this.column2.length<5){
+
+                  for(let i = 0; i < this.column1.length; i++){
+                        let numbOfChecked = 0
+      
+                        for(let j = 0; j < this.column1[i].points.length; j++){
+                            if(this.column1[i].points[j].checked === true){
+                                numbOfChecked += 1
+                            }
+                        }
+      
+                        if(this.column1[i].points.length/2 <= numbOfChecked && this.column1[i].points.length !== numbOfChecked){
+                            this.column2.push(this.column1[i])
+                            this.column1.splice(i, 1)
+                            if(this.column2.length==5){
+                            }
+                        }
+                  }
 
 
+            }
+
+            for(let i = 0; i < this.column2.length; i++){
+                  let numbOfChecked = 0
+  
+                  for(let j = 0; j < this.column2[i].points.length; j++){
+                      if(this.column2[i].points[j].checked === true){
+                          numbOfChecked += 1
+                      }
+                  }
+
+                  if(this.column2[i].points.length === numbOfChecked){
+                      this.column3.push(this.column2[i])
+                      this.column2.splice(i, 1)
+e
+                  }
+              }
+      })
 
 
+}
 
 
 
@@ -98,7 +137,7 @@ Vue.component('card',{
                @click="check"
                :class="{done:point.checked}">
                
-              <li v-if="!block" >{{point.point}}</li>
+              <li >{{point.point}}</li>
               <hr>
           </div>
       </ul>
@@ -111,10 +150,11 @@ Vue.component('card',{
       props:{
             pointsAndTitle: null,
 
+
       },
       methods: {
             check(){
-
+                  eventBus.$emit('checkCard')
             }
       }    
       
