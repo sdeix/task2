@@ -148,7 +148,7 @@ mounted(){
                   if(this.column2[i].points.length === numbOfChecked){
 
                       var now = new Date() 
-                      this.dat.push(now)
+                      this.dat.push(String(now))
                       this.column3.push(this.column2[i])
                       this.column2.splice(i, 1)
                       this.blockOne=false
