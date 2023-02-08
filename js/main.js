@@ -30,7 +30,11 @@ template:`
       <card v-for="card in column2" :pointsAndTitle="card">  </card></div>
       <div class="column column3">
       <card v-for="(card, index) in column3" :dat="dat[index]" :pointsAndTitle="card" >  </card></div>
-
+<button
+      v-on:click="Cleen()"
+>
+  cleen
+</button>
 
 
 </div>
@@ -52,6 +56,13 @@ data(){
       }
   },
 methods:{
+      Cleen(){
+            this.column1=[],
+            this.column2=[],
+            this.column3=[],
+            this.dat=[]
+
+      },
       createCard(){
             if(this.column1.length!=3){
                   
