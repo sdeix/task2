@@ -21,7 +21,7 @@ template:`
       <input type="submit" @click.prevent="createCard" value="Создать карточку">
       </form>
        
-      <card v-for="card in column1" :pointsAndTitle="card" >  </card>
+      <card v-for="card in column1" :pointsAndTitle="card" :block="blockOne">  </card>
       
       
       
@@ -45,6 +45,7 @@ data(){
             column1:[],
             column2:[],
             column3:[],
+            blockOne:false,
       }
   },
 methods:{
@@ -96,6 +97,7 @@ mounted(){
                             this.column2.push(this.column1[i])
                             this.column1.splice(i, 1)
                             if(this.column2.length==5){
+                              this.blockOne=true
                             }
                         }
                   }
@@ -115,7 +117,7 @@ mounted(){
                   if(this.column2[i].points.length === numbOfChecked){
                       this.column3.push(this.column2[i])
                       this.column2.splice(i, 1)
-e
+                      this.blockOne=false
                   }
               }
       })
@@ -137,7 +139,7 @@ Vue.component('card',{
                @click="check"
                :class="{done:point.checked}">
                
-              <li >{{point.point}}</li>
+              <li v-if="!block" >{{point.point}}</li>
               <hr>
           </div>
       </ul>
@@ -149,7 +151,7 @@ Vue.component('card',{
       },
       props:{
             pointsAndTitle: null,
-
+            block: false
 
       },
       methods: {
