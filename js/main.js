@@ -17,17 +17,19 @@ template:`
           
           <input type="submit" value="Создать пункты" @click.prevent="makeOptionsArr" maxlength="20">
       </div>
-      <input v-for="i in 5" :key="i" class="pointInput" type="text" placeholder="пункт">
+      <input v-for="i in options" :key="i" class="pointInput" type="text" placeholder="пункт">
       <input type="submit" @click.prevent="createCard" value="Создать карточку">
       </form>
        
-      <card></card>
+      <card v-for="card in column1" :pointsAndTitle="card" :block="blockOne">  </card>
       
       
       
       </div>
-      <div class="column column2"></div>
-      <div class="column column3"></div>
+      <div class="column column2">
+      <card v-for="card in column2" :pointsAndTitle="card">  </card></div>
+      <div class="column column3">
+      <card v-for="card in column3" :pointsAndTitle="card">  </card></div>
 
 
 
@@ -36,20 +38,53 @@ template:`
 data(){
       return{
             cardTitle: '',
-            numberOfOptions: 5,
+            numberOfOptions: 3,
             cards:[],
+            options:[],
+            points:[],
+            column1:[],
+            column2:[],
+            column3:[],
+            blockOne:false,
       }
   },
 methods:{
       createCard(){
 
+                  console.log(this.column1.length)
+                  
+                  this.options.splice(0,this.options.length)
+                  this.points.splice(0,this.points.length)
+                  let points = document.querySelectorAll('.pointInput')
+      
+                  for(let i = 0; i < points.length; i++){
+                      this.points.push({point: points[i].value ? points[i].value:(i+1)+" пункт", checked: false})
+                  }
+      
+                  let copy = this.points.concat()
+      
+                  this.column1.push({title: this.cardTitle ? this.cardTitle : 'Без названия', points: copy})
+
+
+
+
       },
       makeOptionsArr(){
+            this.points.splice(0,this.points.length)
+            this.options.splice(0,this.options.length);
 
+            for(let i = 0; i < this.numberOfOptions; i++){
+                this.options.push(i)
+            }
             
       }
+},
 
-}
+
+
+
+
+
 
 })
 
@@ -62,23 +97,24 @@ Vue.component('card',{
                @click="point.checked=true"
                @click="check"
                :class="{done:point.checked}">
-              <li>{{point.point}}</li>
+               
+              <li v-if="!block" >{{point.point}}</li>
               <hr>
           </div>
       </ul>
       </div>
       `,
       data(){
-            return{   
-                  pointsAndTitle: {points : [{checked:false, point:"qweqweqw1"}, {checked:false, point:"2qweqweq"}, {checked:false, point:"qweqwe3"}, {checked:false, point:"4qweqweqw"}], title:"title"}                  
+            return{  
             }
       },
       props:{
+            pointsAndTitle: null,
 
       },
       methods: {
             check(){
-                  console.log(this.pointsAndTitle)
+
             }
       }    
       
