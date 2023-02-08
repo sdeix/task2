@@ -131,7 +131,7 @@ mounted(){
 
 Vue.component('card',{
       template:`
-      <div id=card>
+      <div class=card>
       <p id="cardTitle">{{pointsAndTitle.title}}</p>
       <ul id="pointslist">
           <div v-for="point in pointsAndTitle.points"
