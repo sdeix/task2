@@ -29,7 +29,7 @@ template:`
       <div class="column column2">
       <card v-for="card in column2" :pointsAndTitle="card">  </card></div>
       <div class="column column3">
-      <card v-for="card in column3" :dat="dat" :pointsAndTitle="card" >  </card></div>
+      <card v-for="(card, index) in column3" :dat="dat[index]" :pointsAndTitle="card" >  </card></div>
 
 
 
@@ -46,7 +46,7 @@ data(){
             column2:[],
             column3:[],
             blockOne:false,
-            dat: "",
+            dat: [],
       }
   },
 methods:{
@@ -118,7 +118,7 @@ mounted(){
                   if(this.column2[i].points.length === numbOfChecked){
 
                       var now = new Date() 
-                      this.dat = now
+                      this.dat.push(now)
                       this.column3.push(this.column2[i])
                       this.column2.splice(i, 1)
                       this.blockOne=false
@@ -143,7 +143,7 @@ Vue.component('card',{
                @click="check"
                :class="{done:point.checked}">
                
-              <li :class=class3 v-if="!block" >{{point.point}}</li>
+              <li v-if="!block" >{{point.point}}</li>
               <hr>
           </div>
           <li>{{dat}}</li>
