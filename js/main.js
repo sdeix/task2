@@ -47,12 +47,13 @@ data(){
             column3:[],
             blockOne:false,
             dat: [],
+            allColumns:[],
+            al:[]
       }
   },
 methods:{
       createCard(){
             if(this.column1.length!=3){
-                  console.log(this.column1.length)
                   
                   this.options.splice(0,this.options.length)
                   this.points.splice(0,this.points.length)
@@ -80,9 +81,23 @@ methods:{
             
       }
 },
+computed: {
+
+},
 mounted(){
+      if (localStorage.getItem('allColumns')) {
+            try {
+              this.allColumns = JSON.parse(localStorage.getItem('allColumns'));
+              this.column1 = this.allColumns[0]
+              this.column2 = this.allColumns[1]
+              this.column3 = this.allColumns[2]
+              this.dat = this.allColumns[3]
+            } catch(e) {
+              localStorage.removeItem('allColumns');
+            }
+      }
+
       eventBus.$on('checkCard', cardsCheck => {
-            console.log("Qwe")
             if(this.column2.length<5){
 
                   for(let i = 0; i < this.column1.length; i++){
@@ -127,7 +142,39 @@ mounted(){
       })
 
 
-}
+},
+
+watch:{
+      column1(){
+            this.allColumns = [this.column1,this.column2,this.column3, this.dat]
+            
+
+
+
+
+            const parsed = JSON.stringify(this.allColumns);
+            localStorage.setItem('allColumns', parsed);
+
+
+      },
+      column2(){
+            allColumns = [this.column1, this.column2, this.column3, this.dat]
+
+            
+            const parsed = JSON.stringify(this.allColumns);
+            localStorage.setItem('allColumns', parsed);
+
+      },
+      column3(){
+            allColumns = [this.column1, this.column2, this.column3, this.dat]
+
+            
+            const parsed = JSON.stringify(this.allColumns);
+            localStorage.setItem('allColumns', parsed);
+
+
+      },
+}  
 
 
 
